@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Picross Játék</title>
+  <link rel="stylesheet" href="picross-jatek.css">
+</head>
+<body>
+
+  <header>
+    <h1>PICROSS</h1>
+    <h1>JÁTÉK</h1>
+    <p>Készítette: Kis Csaba és Balogh Dávid</p>
+  </header>
+
+  <div class="top-controls" id="controlBar">
+    <div class="hud">
+      <div class="item">
+        <div class="val" id="timerVal">00:00</div>
+        <div class="lbl">IDŐ</div>
+      </div>
+      <div class="item">
+        <div class="val danger" id="errVal">0</div>
+        <div class="lbl">HIBA</div>
+      </div>
+      <div class="item">
+        <div class="val" id="progressVal">0%</div>
+        <div class="lbl">HALADÁS</div>
+      </div>
+      <div class="item">
+        <div class="val" id="sizeVal">—</div>
+        <div class="lbl">MÉRET</div>
+      </div>
+    </div>
+    <label style="font-size:0.72rem; color:var(--muted); letter-spacing:0.08em;">MÉRET:</label>
+    <select id="sizeSelect">
+      <option value="5">5×5</option>
+      <option value="10" selected>10×10</option>
+      <option value="15">15×15</option>
+      <option value="20">20×20</option>
+    </select>
+    <button class="random-btn" onclick="newRandomGame()">🎲 ÚJ VÉLETLEN PÁLYA</button>
+    <button class="primary" onclick="triggerLoad()">📂 PÁLYA BETÖLTÉS</button>
+    <button class="save-btn" onclick="saveCurrentPuzzle()">💾 PÁLYA MENTÉSE</button>
+    <button class="hint-btn" onclick="useHint()">💡 HINT (SOR/OSZLOP)</button>
+    <button onclick="replayCurrentPuzzle()">↺ ÚJRAINDÍTÁS</button>
+  </div>
+
+  <div class="workspace" id="workspace"></div>
+
+  <div class="info-bar" id="infoBar">
+    <span>BAL kattintás</span>: Mező felfedése &nbsp;|&nbsp;
+    <span>JOBB kattintás</span>: Megjelölés (sárga ✕) &nbsp;|&nbsp;
+    Max <span>3 hiba</span> megengedett
+  </div>
+
+  <div class="overlay" id="winOverlay">
+    <h2>🎉 MEGOLDVA!</h2>
+    <p id="winText"></p>
+    <div class="overlay-buttons">
+      <button class="primary" onclick="newRandomGame(); document.getElementById('winOverlay').classList.remove('show')">🎲 ÚJ PÁLYA</button>
+      <button onclick="document.getElementById('winOverlay').classList.remove('show')">Bezárás</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="loseOverlay">
+    <h2 style="background: linear-gradient(135deg,#ff4f6d,#f59e0b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">GAME OVER</h2>
+    <p id="loseText"></p>
+    <div class="overlay-buttons">
+      <button class="danger" onclick="replayCurrentPuzzle()">↺ ÚJRA</button>
+      <button class="random-btn" onclick="newRandomGame(); document.getElementById('loseOverlay').classList.remove('show')">🎲 ÚJ PÁLYA</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <input type="file" id="fileInput" accept=".picross,.json" style="display:none" onchange="handleFileInput(event)">
+
+  <script src="picross-jatek.js"></script>
+</body>
+</html>
